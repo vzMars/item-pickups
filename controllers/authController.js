@@ -1,11 +1,17 @@
 module.exports = {
-  loginUser: async (req, res) => {
+  getLogin: async (req, res) => {
+    res.render('login', { title: 'Login' });
+  },
+  postLogin: async (req, res) => {
     res.json('login');
   },
-  logoutUser: async (req, res) => {
+  logout: async (req, res) => {
     res.json('logout');
   },
-  signupUser: async (req, res) => {
+  getSignup: (req, res) => {
+    res.render('signup', { title: 'Signup' });
+  },
+  postSignup: async (req, res) => {
     res.json('signup');
   },
 };
