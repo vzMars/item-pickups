@@ -1,6 +1,6 @@
 module.exports = {
   getLogin: async (req, res) => {
-    res.render('login', { title: 'Login' });
+    res.render('login', { user: req.user, title: 'Login' });
   },
   postLogin: async (req, res) => {
     res.json('login');
@@ -9,7 +9,7 @@ module.exports = {
     res.json('logout');
   },
   getSignup: (req, res) => {
-    res.render('signup', { title: 'Signup' });
+    res.render('signup', { user: req.user, title: 'Signup' });
   },
   postSignup: async (req, res) => {
     res.json('signup');

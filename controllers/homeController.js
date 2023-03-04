@@ -1,5 +1,5 @@
 module.exports = {
   getIndex: (req, res) => {
-    res.render('index', { title: 'ItemPickups' });
+    res.render('index', { user: req.user, title: 'ItemPickups' });
   },
 };
