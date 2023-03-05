@@ -3,6 +3,10 @@ const bcrypt = require('bcrypt');
 const validator = require('validator');
 
 const UserSchema = new mongoose.Schema({
+  displayname: {
+    type: String,
+    required: true,
+  },
   username: {
     type: String,
     required: true,
@@ -37,7 +41,9 @@ UserSchema.statics.signup = async function (username, email, password) {
     throw Error('Password not strong enough');
   }
 
-  const existingUser = await this.findOne({ $or: [{ username }, { email }] });
+  const existingUser = await this.findOne({
+    $or: [{ username: username.toLowerCase() }, { email: email.toLowerCase() }],
+  });
 
   if (existingUser) {
     throw Error('Account with that email or username already in use');
@@ -46,7 +52,12 @@ UserSchema.statics.signup = async function (username, email, password) {
   const salt = await bcrypt.genSalt(10);
   const hash = await bcrypt.hash(password, salt);
 
-  const user = await this.create({ username, email, password: hash });
+  const user = await this.create({
+    displayname: username,
+    username: username.toLowerCase(),
+    email: email.toLowerCase(),
+    password: hash,
+  });
 
   return user;
 };

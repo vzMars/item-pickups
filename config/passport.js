@@ -9,16 +9,16 @@ module.exports = function (passport) {
   passport.use(
     new LocalStrategy(options, async (email, password, done) => {
       try {
-        const user = await User.findOne({ email });
+        const user = await User.findOne({ email: email.toLowerCase() });
 
         if (!user) {
-          return done(null, false, { msg: 'Incorrect email' });
+          return done(null, false, { msg: 'Invalid email' });
         }
 
         const isMatch = await user.comparePassword(password);
 
         if (!isMatch) {
-          return done(null, false, { msg: 'Incorrect password' });
+          return done(null, false, { msg: 'Invalid password' });
         }
 
         return done(null, user);
