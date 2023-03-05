@@ -1,5 +1,8 @@
 <main>
   <h1>Login Page</h1>
+  <% if (locals.messages.error) { %>
+  <p style="color: red"><%= messages.error %></p>
+  <% } %>
   <form action="/login" method="POST">
     <label for="email">Email</label>
     <input type="email" name="email" placeholder="Enter Email" />

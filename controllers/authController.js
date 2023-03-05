@@ -1,11 +1,31 @@
 const User = require('../models/User');
+const passport = require('passport');
 
 module.exports = {
   getLogin: async (req, res) => {
     res.render('login', { user: req.user, title: 'Login' });
   },
-  postLogin: async (req, res) => {
-    res.json('login');
+  postLogin: (req, res, next) => {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      req.flash('error', 'All fields must be filled');
+      return res.redirect('/login');
+    }
+
+    passport.authenticate('local', (err, user, info) => {
+      if (err) return next(err);
+
+      if (!user) {
+        req.flash('error', info.msg);
+        return res.redirect('/login');
+      }
+
+      req.logIn(user, (err) => {
+        if (err) return next(err);
+        res.redirect('/');
+      });
+    })(req, res, next);
   },
   logout: async (req, res, next) => {
     req.logout((err) => {

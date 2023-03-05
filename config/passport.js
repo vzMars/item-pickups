@@ -1,13 +1,13 @@
 const LocalStrategy = require('passport-local').Strategy;
 const User = require('../models/User');
 
-const customFields = {
+const options = {
   usernameField: 'email',
 };
 
 module.exports = function (passport) {
   passport.use(
-    new LocalStrategy(customFields, async (email, password, done) => {
+    new LocalStrategy(options, async (email, password, done) => {
       try {
         const user = await User.findOne({ email });
 
