@@ -1,5 +1,8 @@
 <main>
   <h1>Signup Page</h1>
+  <% if (locals.messages.error) { %>
+  <p style="color: red"><%= messages.error %></p>
+  <% } %>
   <form action="/signup" method="POST">
     <label for="username">Username</label>
     <input type="text" name="username" placeholder="Enter Username" />
@@ -7,12 +10,6 @@
     <input type="email" name="email" placeholder="Email" />
     <label for="password">Password</label>
     <input type="password" name="password" placeholder="Password" />
-    <label for="confirmPassword">Confirm Password</label>
-    <input
-      type="password"
-      name="confirmPassword"
-      placeholder="Confirm Password"
-    />
     <button type="submit" class="btn">Signup</button>
   </form>
 </main>
