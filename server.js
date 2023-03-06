@@ -9,6 +9,7 @@ const morgan = require('morgan');
 const expressLayouts = require('express-ejs-layouts');
 const connectDB = require('./config/database');
 const mainRoutes = require('./routes/main');
+const itemRoutes = require('./routes/item');
 
 // Load config
 require('dotenv').config({ path: './config/.env' });
@@ -64,6 +65,7 @@ app.use(passport.session());
 
 // Routes
 app.use('/', mainRoutes);
+app.use('/item', itemRoutes);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
