@@ -1,10 +1,36 @@
-<header>
-  <a href="/" class="header-link">Home</a>
-  <% if (user) { %>
-  <span>Welcome <%= user.username %></span>
-  <a href="/logout" class="btn">Logout</a>
-  <% } else {%>
-  <a href="/login" class="btn">Login</a>
-  <a href="/signup" class="btn">Sign Up</a>
-  <% } %>
-</header>
+<nav class="navbar navbar-dark navbar-expand-lg p-3 bg-dark">
+  <div class="container-lg">
+    <a class="navbar-brand fs-1 fw-bold text-warning" href="/">ItemPickups</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div
+      class="collapse navbar-collapse justify-content-end"
+      id="navbarSupportedContent"
+    >
+      <div class="navbar-nav gap-2">
+        <% if (user) { %>
+        <span class="navbar-text fw-semibold text-white"
+          >Welcome <%= user.displayname %></span
+        >
+        <a class="nav-link" href="/explore">Explore</a>
+        <a class="nav-link" href="/profile">Profile</a>
+        <a class="nav-link" href="/favorites">Favorites</a>
+        <a class="nav-link" href="/item/add">Add Item</a>
+        <a class="btn btn-warning" href="/logout">Logout</a>
+        <% } else {%>
+        <a class="btn btn-outline-light" href="/login">Login</a>
+        <a class="btn btn-warning" href="/signup">Sign Up</a>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</nav>
