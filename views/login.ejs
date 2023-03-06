@@ -1,13 +1,33 @@
-<main class="flex-shrink-0 my-auto">
-  <h1>Login Page</h1>
-  <% if (locals.messages.error) { %>
-  <p style="color: red"><%= messages.error %></p>
-  <% } %>
-  <form action="/login" method="POST">
-    <label for="email">Email</label>
-    <input type="email" name="email" placeholder="Enter Email" />
-    <label for="password">Password</label>
-    <input type="password" name="password" placeholder="Enter Password" />
-    <button type="submit">Login</button>
-  </form>
+<main class="form-signin w-100 m-auto">
+  <div class="container-sm bg-dark p-4 m-1 rounded">
+    <h1 class="text-light mb-3">Login</h1>
+    <% if (locals.messages.error) { %>
+    <p style="color: red"><%= messages.error %></p>
+    <% } %>
+    <form action="/login" method="POST">
+      <div class="form-floating mb-3">
+        <input
+          type="email"
+          name="email"
+          class="form-control"
+          id="floatingInput"
+          placeholder="name@example.com"
+        />
+        <label for="floatingInput">Email Address</label>
+      </div>
+      <div class="form-floating mb-3">
+        <input
+          type="password"
+          name="password"
+          class="form-control"
+          id="floatingPassword"
+          placeholder="Password"
+        />
+        <label for="floatingPassword">Password</label>
+      </div>
+      <button type="submit" class="w-100 btn btn-lg btn-warning fw-semibold">
+        Login
+      </button>
+    </form>
+  </div>
 </main>
