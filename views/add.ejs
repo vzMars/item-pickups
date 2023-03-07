@@ -1,16 +1,17 @@
 <main class="form-add w-100 m-auto">
   <div class="container-sm bg-dark p-4 my-5 rounded">
     <h1 class="text-light mb-3">Add a item</h1>
+    <% if (locals.messages.error) { %>
+    <p style="color: red"><%= messages.error %></p>
+    <% } %>
     <form action="/item/add" enctype="multipart/form-data" method="POST">
       <div class="mb-3">
         <label for="title" class="form-label text-light">Item Title</label>
         <input type="text" class="form-control" id="title" name="title" />
       </div>
-
       <div class="mb-3">
-        <label for="item-type" class="form-label text-light">Item Type</label>
-        <select class="form-select" id="item-type" name="item-type">
-          <option selected>Please Select</option>
+        <label for="itemType" class="form-label text-light">Item Type</label>
+        <select class="form-select" id="itemType" name="itemType">
           <option value="games">Games</option>
           <option value="movies">Movies</option>
           <option value="books">Books</option>
@@ -30,7 +31,7 @@
       </div>
       <div class="mb-3">
         <label for="image" class="form-label text-light">Image</label>
-        <input type="file" class="form-control" id="image" name="image" />
+        <input type="file" class="form-control" id="file" name="file" />
       </div>
       <button
         type="submit"
