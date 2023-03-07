@@ -19,10 +19,14 @@
             </h6>
             <p class="card-text text-white">
               By
-              <a href="#" class="text-warning"><%= item.user.displayname %></a>
+              <a href="/profile/<%= item.user._id %>" class="text-warning"
+                ><%= item.user.displayname %></a
+              >
             </p>
             <p class="card-text text-white"><%= item.description %></p>
-            <a href="#" class="btn btn-warning fw-semibold">View Item</a>
+            <a href="/item/<%= item._id %>" class="btn btn-warning fw-semibold"
+              >View Item</a
+            >
           </div>
           <div class="card-footer">
             <span class="badge text-bg-warning"><%= item.itemType %></span>

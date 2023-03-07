@@ -7,7 +7,7 @@ const { ensureAuth, ensureGuest } = require('../middleware/auth');
 
 router.get('/', homeController.getIndex);
 router.get('/explore', ensureAuth, itemController.getExplore);
-router.get('/profile', ensureAuth, itemController.getProfile);
+router.get('/profile/:id', ensureAuth, itemController.getProfile);
 router.get('/favorites', ensureAuth, itemController.getFavorites);
 router.get('/logout', ensureAuth, authController.logout);
 

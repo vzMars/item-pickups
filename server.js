@@ -66,6 +66,13 @@ app.use(passport.session());
 // Routes
 app.use('/', mainRoutes);
 app.use('/item', itemRoutes);
+app.get('*', (req, res) => {
+  res.render('404', {
+    user: req.user,
+    title: '404',
+    error: 'Page Not Found!',
+  });
+});
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

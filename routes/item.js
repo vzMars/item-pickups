@@ -6,6 +6,7 @@ const upload = require('../middleware/multer');
 
 router.use(ensureAuth);
 router.get('/add', itemController.addForm);
+router.get('/:id', itemController.getItem);
 router.post('/add', upload.single('file'), itemController.addItem);
 
 module.exports = router;

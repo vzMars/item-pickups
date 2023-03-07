@@ -1,5 +1,7 @@
 const cloudinary = require('../middleware/cloudinary');
 const Item = require('../models/Item');
+const User = require('../models/User');
+const mongoose = require('mongoose');
 
 module.exports = {
   getExplore: (req, res) => {
@@ -7,22 +9,54 @@ module.exports = {
   },
   getProfile: async (req, res) => {
     try {
-      const items = await Item.find({ user: req.user.id })
+      const { id } = req.params;
+
+      if (!mongoose.isValidObjectId(id)) {
+        throw Error(`User Not Found!`);
+      }
+
+      const user = await User.findById(id);
+
+      if (!user) {
+        throw Error('User Not Found!');
+      }
+
+      const items = await Item.find({ user: id })
         .populate('user', 'displayname')
         .sort({
           createdAt: -1,
         });
+
       res.render('profile', {
         items,
         user: req.user,
         title: req.user.displayname,
       });
     } catch (err) {
-      console.log(err);
+      return res.render('404', {
+        user: req.user,
+        title: req.user.displayname,
+        error: err.message,
+      });
     }
   },
   getFavorites: (req, res) => {
     res.render('favorites', { user: req.user, title: 'Favorite Items' });
+  },
+  getItem: async (req, res) => {
+    try {
+      const { id } = req.params;
+
+      if (!mongoose.isValidObjectId(id)) {
+        throw Error(`Invalid Item ID`);
+      }
+      res.render('item', {
+        user: req.user,
+        title: 'item',
+      });
+    } catch (err) {
+      console.log(err);
+    }
   },
   addForm: (req, res) => {
     res.render('add', { user: req.user, title: 'Add Item' });

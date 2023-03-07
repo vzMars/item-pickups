@@ -23,7 +23,7 @@
             >Welcome <%= user.displayname %></span
           >
           <a class="nav-link" href="/explore">Explore</a>
-          <a class="nav-link" href="/profile">Profile</a>
+          <a class="nav-link" href="/profile/<%= user._id %>">Profile</a>
           <a class="nav-link" href="/favorites">Favorites</a>
           <a class="nav-link" href="/item/add">Add Item</a>
           <a class="btn btn-warning fw-semibold" href="/logout">Logout</a>
