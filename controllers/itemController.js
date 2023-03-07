@@ -5,8 +5,21 @@ module.exports = {
   getExplore: (req, res) => {
     res.render('explore', { user: req.user, title: 'ItemPickups' });
   },
-  getProfile: (req, res) => {
-    res.render('profile', { user: req.user, title: req.user.displayname });
+  getProfile: async (req, res) => {
+    try {
+      const items = await Item.find({ user: req.user.id })
+        .populate('user', 'displayname')
+        .sort({
+          createdAt: -1,
+        });
+      res.render('profile', {
+        items,
+        user: req.user,
+        title: req.user.displayname,
+      });
+    } catch (err) {
+      console.log(err);
+    }
   },
   getFavorites: (req, res) => {
     res.render('favorites', { user: req.user, title: 'Favorite Items' });
