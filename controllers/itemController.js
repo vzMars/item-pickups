@@ -107,10 +107,30 @@ module.exports = {
         user: req.user.id,
       });
 
-      res.redirect('/profile');
+      res.redirect(`/profile/${req.user_id}`);
     } catch (error) {
       req.flash('error', error.message);
       return res.redirect('/item/add');
+    }
+  },
+  likeItem: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const item = await Item.findById(id);
+
+      // console.log(item.likes);
+      if (item.likes.includes(req.user.id)) {
+        item.likes = item.likes.filter(
+          (like) => like.valueOf() !== req.user.id
+        );
+      } else {
+        item.likes.push(req.user.id);
+      }
+
+      await item.save();
+      res.redirect('back');
+    } catch (error) {
+      console.log(error.message);
     }
   },
 };
