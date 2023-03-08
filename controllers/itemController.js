@@ -12,7 +12,7 @@ module.exports = {
       const { id } = req.params;
 
       if (!mongoose.isValidObjectId(id)) {
-        throw Error(`User Not Found!`);
+        throw Error('User Not Found!');
       }
 
       const user = await User.findById(id);
@@ -48,14 +48,26 @@ module.exports = {
       const { id } = req.params;
 
       if (!mongoose.isValidObjectId(id)) {
-        throw Error(`Invalid Item ID`);
+        throw Error('Item Not Found!');
       }
+
+      const item = await Item.findById(id).populate('user', 'displayname');
+
+      if (!item) {
+        throw Error('Item Not Found!');
+      }
+
       res.render('item', {
+        item,
         user: req.user,
         title: 'item',
       });
     } catch (err) {
-      console.log(err);
+      return res.render('404', {
+        user: req.user,
+        title: req.user.displayname,
+        error: err.message,
+      });
     }
   },
   addForm: (req, res) => {
