@@ -4,8 +4,24 @@ const User = require('../models/User');
 const mongoose = require('mongoose');
 
 module.exports = {
-  getExplore: (req, res) => {
-    res.render('explore', { user: req.user, title: 'ItemPickups' });
+  getExplore: async (req, res) => {
+    try {
+      const items = await Item.find().populate('user', 'displayname').sort({
+        createdAt: -1,
+      });
+
+      res.render('items', {
+        items,
+        user: req.user,
+        title: 'ItemPickups',
+      });
+    } catch (error) {
+      return res.render('404', {
+        user: req.user,
+        title: '404',
+        error: err.message,
+      });
+    }
   },
   getProfile: async (req, res) => {
     try {
@@ -27,15 +43,15 @@ module.exports = {
           createdAt: -1,
         });
 
-      res.render('profile', {
+      res.render('items', {
         items,
         user: req.user,
-        title: req.user.displayname,
+        title: user.displayname,
       });
     } catch (err) {
       return res.render('404', {
         user: req.user,
-        title: req.user.displayname,
+        title: '404',
         error: err.message,
       });
     }
@@ -60,12 +76,12 @@ module.exports = {
       res.render('item', {
         item,
         user: req.user,
-        title: 'item',
+        title: `${item.user.displayname} - ${item.title}`,
       });
     } catch (err) {
       return res.render('404', {
         user: req.user,
-        title: req.user.displayname,
+        title: '404',
         error: err.message,
       });
     }
