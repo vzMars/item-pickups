@@ -6,6 +6,7 @@ const MongoStore = require('connect-mongo');
 const methodOverride = require('method-override');
 const flash = require('express-flash');
 const morgan = require('morgan');
+const errorHandler = require('./middleware/errorHandler');
 const expressLayouts = require('express-ejs-layouts');
 const connectDB = require('./config/database');
 const mainRoutes = require('./routes/main');
@@ -64,6 +65,8 @@ app.get('*', (req, res) => {
     error: 'Page Not Found!',
   });
 });
+
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
