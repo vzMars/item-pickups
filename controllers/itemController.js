@@ -56,8 +56,23 @@ module.exports = {
       });
     }
   },
-  getFavorites: (req, res) => {
-    res.render('favorites', { user: req.user, title: 'Favorite Items' });
+  getFavorites: async (req, res) => {
+    try {
+      const items = await Item.find({ likes: req.user.id })
+        .populate('user', 'displayname')
+        .sort({
+          createdAt: -1,
+        });
+
+      res.render('items', {
+        items,
+        user: req.user,
+        title: `${req.user.displayname}'s Favorites`,
+      });
+    } catch (err) {
+      console.log(err.message);
+    }
+    // res.render('favorites', { user: req.user, title: 'Favorite Items' });
   },
   getItem: async (req, res) => {
     try {
@@ -91,7 +106,7 @@ module.exports = {
   },
   addItem: async (req, res) => {
     const { title, itemType, description } = req.body;
-    console.log('hi?');
+
     try {
       if (!title || !itemType || !description || !req.file) {
         throw Error('All fields must be filled');
@@ -109,8 +124,8 @@ module.exports = {
       });
 
       res.redirect(`/profile/${req.user._id}`);
-    } catch (error) {
-      req.flash('error', error.message);
+    } catch (err) {
+      req.flash('error', err.message);
       return res.redirect('/item/add');
     }
   },
@@ -129,8 +144,8 @@ module.exports = {
 
       await item.save();
       res.redirect('back');
-    } catch (error) {
-      console.log(error.message);
+    } catch (err) {
+      console.log(err.message);
     }
   },
 };
