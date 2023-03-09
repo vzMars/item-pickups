@@ -26,6 +26,16 @@
             >
           </p>
           <p class="card-text text-white"><%= item.description %></p>
+          <% if (item.user.id === user.id) { %>
+          <form
+            action="/item/delete/<%= item.id %>?_method=DELETE"
+            method="POST"
+          >
+            <button class="btn btn-danger btn-sm me-1" type="submit">
+              <i class="bi bi-trash"></i>
+            </button>
+          </form>
+          <% } %>
         </div>
         <div class="card-footer">
           <span class="badge text-bg-warning"><%= item.itemType %></span>

@@ -9,5 +9,6 @@ router.get('/add', itemController.addForm);
 router.get('/:id', itemController.getItem);
 router.post('/add', upload.single('file'), itemController.addItem);
 router.put('/like/:id', itemController.likeItem);
+router.delete('/delete/:id', itemController.deleteItem);
 
 module.exports = router;

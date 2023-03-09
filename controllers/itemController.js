@@ -72,7 +72,6 @@ module.exports = {
     } catch (err) {
       console.log(err.message);
     }
-    // res.render('favorites', { user: req.user, title: 'Favorite Items' });
   },
   getItem: async (req, res) => {
     try {
@@ -146,6 +145,19 @@ module.exports = {
       res.redirect('back');
     } catch (err) {
       console.log(err.message);
+    }
+  },
+  deleteItem: async (req, res) => {
+    try {
+      const { id } = req.params;
+      let item = await Item.findById(id);
+
+      await cloudinary.uploader.destroy(item.cloudinaryId);
+      await item.deleteOne();
+
+      res.redirect(`/profile/${req.user._id}`);
+    } catch (error) {
+      res.redirect(`/profile/${req.user._id}`);
     }
   },
 };
