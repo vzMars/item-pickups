@@ -7,7 +7,11 @@
         birthday gift? Treated yourself to a new console? This is the place to
         show them off!
       </p>
+      <% if (user) { %>
+      <a class="btn btn-warning btn-lg fw-semibold" href="/explore">Explore</a>
+      <% } else { %>
       <a class="btn btn-warning btn-lg fw-semibold" href="/signup">Sign Up</a>
+      <% } %>
     </div>
   </div>
 </main>
