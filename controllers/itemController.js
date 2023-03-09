@@ -91,6 +91,7 @@ module.exports = {
   },
   addItem: async (req, res) => {
     const { title, itemType, description } = req.body;
+    console.log('hi?');
     try {
       if (!title || !itemType || !description || !req.file) {
         throw Error('All fields must be filled');
@@ -107,7 +108,7 @@ module.exports = {
         user: req.user.id,
       });
 
-      res.redirect(`/profile/${req.user_id}`);
+      res.redirect(`/profile/${req.user._id}`);
     } catch (error) {
       req.flash('error', error.message);
       return res.redirect('/item/add');
@@ -118,7 +119,6 @@ module.exports = {
       const { id } = req.params;
       const item = await Item.findById(id);
 
-      // console.log(item.likes);
       if (item.likes.includes(req.user.id)) {
         item.likes = item.likes.filter(
           (like) => like.valueOf() !== req.user.id
