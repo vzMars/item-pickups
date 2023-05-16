@@ -68,7 +68,7 @@ app.get('*', (req, res) => {
 
 app.use(errorHandler);
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Listening on port ${PORT}`);
+const port = process.env.port || 8080;
+app.listen(port, () => {
+  console.log(`Listening on port ${port}`);
 });
